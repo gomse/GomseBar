@@ -1,6 +1,6 @@
 ## Interface: 40000
 ## Version: 1.0
-## Title: GommseBar v1.0
+## Title: GommseBar v1.01
 ## Notes: 화면에 각종 정보를 표시해 주는 바를 표시합니다.
 ## Author: 곰세
 ## SavedVariables: GommseBar_SavedVar

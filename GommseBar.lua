@@ -1,7 +1,11 @@
 ﻿-- 전역 변수 및 상수 선언.
-local GOMMSEBAR_UPDATE_RATE		= 1.0;
+local GOMMSEBAR_VERSION			= "1.01";
 local GOMMSEBAR_NAME			= "곰세바";
-local GOMMSEBAR_VERSION			= "1.0";
+local GOMMSEBAR_AUTHOR			= "곰세 (블랙무어-호드)";
+
+local GOMMSEBAR_UPDATE_RATE		= 1.0;
+local CHARACTER_MAX_LEVEL		= 80;
+
 
 function GommseBar_Print( msg )
 	if ( DEFAULT_CHAT_FRAME ) then
@@ -16,7 +20,7 @@ function GommseBar_OnLoad( self )
 	-- 명령어 설정.
 	SlashCmdList["GOMMSEBAR"] = GommseBar_SlashHandler;
 	SLASH_GOMMSEBAR1 = "/gommsebar";
-	SLASH_GOMMSEBAR2 = "/곰세바";
+	SLASH_GOMMSEBAR2 = "/"..GOMMSEBAR_NAME;
 
 	-- 변수 초기화.
 	GommseBarFrame.timeSinceLastUpdate = 0;
@@ -35,10 +39,10 @@ function GommseBar_SlashHandler( msg )
 		GommseBar_Print( "모두 초기화 되었습니다." );
 	else
 		GommseBar_Print( "--- 도움말 ---" );
-		GommseBar_Print( "/곰세바 |cFFFFBB00툴팁 [없음/상단/하단] |cFFFFFFFF- 툴팁 표시 위치를 설정." );
-		GommseBar_Print( "/곰세바 |cFFFFBB00배경 [없음/자동/경험치/평판] |cFFFFFFFF- 배경을 설정합니다." );
-		GommseBar_Print( "/곰세바 |cFFFFBB00초기화 |cFFFFFFFF- 모든 설정을 초기화합니다." );
-		GommseBar_Print( "/곰세바 |cFFFFBB00정보 |cFFFFFFFF- 애드온 정보 출력." );
+		GommseBar_Print( "/"..GOMMSEBAR_NAME.." |cFFFFBB00툴팁 [없음/상단/하단] |cFFFFFFFF- 툴팁 표시 위치를 설정." );
+		GommseBar_Print( "/"..GOMMSEBAR_NAME.." |cFFFFBB00배경 [없음/자동/경험치/평판] |cFFFFFFFF- 배경을 설정합니다." );
+		GommseBar_Print( "/"..GOMMSEBAR_NAME.." |cFFFFBB00초기화 |cFFFFFFFF- 모든 설정을 초기화합니다." );
+		GommseBar_Print( "/"..GOMMSEBAR_NAME.." |cFFFFBB00정보 |cFFFFFFFF- 애드온 정보 출력." );
 	end
 end
 
@@ -55,7 +59,7 @@ function GommseBar_CmdTooltip( msg )
 		GommseBar_SavedVar.tooltip = 2;
 		GommseBar_Print( "툴팁을 상단에 표시합니다." );
 	else
-		GommseBar_Print( "/곰세바 툴팁 [없음/상단/하단]으로 툴팁이 표시되는 위치를 설정할 수 있습니다." );
+		GommseBar_Print( "/"..GOMMSEBAR_NAME.." 툴팁 [없음/상단/하단]으로 툴팁이 표시되는 위치를 설정할 수 있습니다." );
 	end
 end
 
@@ -75,7 +79,7 @@ function GommseBar_CmdBackground( msg )
 		GommseBar_SavedVar.background = 3;
 		GommseBar_Print( "배경에 평판바를 표시합니다." );
 	else
-		GommseBar_Print( "/곰세바 배경 [없음/자동/경험치/평판]으로 배경을 설정할 수 있습니다." );
+		GommseBar_Print( "/"..GOMMSEBAR_NAME.." 배경 [없음/자동/경험치/평판]으로 배경을 설정할 수 있습니다." );
 	end
 
 	GommseBarStatusBar_Update();
@@ -99,7 +103,7 @@ function GommseBar_CmdInfo( msg )
 	GommseBar_Print( "--- 정보 ---" );
 	GommseBar_Print( "|cFFFFBB00툴팁: |cFFFFFFFF"..tooltip );
 	GommseBar_Print( "|cFFFFBB00배경: |cFFFFFFFF"..background );
-	GommseBar_Print( "|cFFFFBB00제작: |cFFFFFFFF곰세 (블랙무어-호드)" );
+	GommseBar_Print( "|cFFFFBB00제작: |cFFFFFFFF"..GOMMSEBAR_AUTHOR );
 end
 
 function GommseBar_Reset()
@@ -192,7 +196,7 @@ function GommseBar_UpdateTooltip()
 
 		GommseBarFrame.tooltipTimer = GommseBarFrame.tooltipTimer + 1;
 		if ( GommseBarFrame.tooltipTimer >= 3 ) then
-			GommseBarTooltip:AddLine( "\n제작: |cFFFFFFFF곰세 (블랙무어-호드)" );
+			GommseBarTooltip:AddLine( "\n제작: |cFFFFFFFF"..GOMMSEBAR_AUTHOR );
 			GommseBarTooltip:Show();
 		end
 	end
@@ -357,7 +361,7 @@ function GommseBarTooltip_AddRepairStatus()
 end
 
 function GommseBarTooltip_AddXP()
-	if( UnitLevel("player") == 80 ) then
+	if( UnitLevel("player") == CHARACTER_MAX_LEVEL ) then
 		return;
 	end
 
@@ -473,7 +477,7 @@ function GommseBarStatusBar_ShowReputation()
 end
 
 function GommseBarStatusBar_ShowExp()
-	if ( UnitLevel( "player" ) ~= 80 ) then
+	if ( UnitLevel( "player" ) ~= CHARACTER_MAX_LEVEL ) then
 		GommseBarStatusBar:SetMinMaxValues( 0, UnitXPMax( "player" ) );
 		GommseBarStatusBar:SetValue( UnitXP( "player" ) );
 
