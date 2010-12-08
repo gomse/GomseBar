@@ -118,6 +118,15 @@ function GommseBar_Reset()
 	GommseBarStatusBar_Update();
 end
 
+function GommseBar_CheckSavedVar()
+	if ( ( not GommseBar_SavedVar ) or ( GommseBar_SavedVar.ver ~= GOMMSEBAR_VERSION ) ) then
+		GommseBar_Reset();
+		return false;
+	end
+
+	return true;
+end
+
 function GommseBar_OnEvent( event )
 	if ( event == "VARIABLES_LOADED" ) then
 		GommseBar_OnVarLoaded();
@@ -125,14 +134,12 @@ function GommseBar_OnEvent( event )
 end
 
 function GommseBar_OnVarLoaded()
-	if ( ( not GommseBar_SavedVar ) or ( GommseBar_SavedVar.ver ~= GOMMSEBAR_VERSION ) ) then
-		GommseBar_Reset();
-	else
+	if ( GommseBar_CheckSavedVar() ) then
 		GommseBarStatusBar_Update();
 	end
 
 	if ( DEFAULT_CHAT_FRAME ) then
-		DEFAULT_CHAT_FRAME:AddMessage( "|cFF00FFFF"..GOMMSEBAR_NAME.." v"..GOMMSEBAR_VERSION.." (명령어: /곰세바, /gommsebar)" );
+		DEFAULT_CHAT_FRAME:AddMessage( "|cFF00FFFF"..GOMMSEBAR_NAME.." v"..GOMMSEBAR_VERSION.." (명령어: /gommsebar, /"..GOMMSEBAR_NAME..")" );
 	end
 end
 
@@ -440,7 +447,9 @@ function GommseBarStatusBar_OnLoad( self )
 end
 
 function GommseBarStatusBar_OnEvent( event )
-	GommseBarStatusBar_Update();
+	if ( GommseBar_CheckSavedVar() ) then
+		GommseBarStatusBar_Update();
+	end
 end
 
 function GommseBarStatusBar_ShowReputation()
