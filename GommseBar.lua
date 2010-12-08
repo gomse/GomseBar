@@ -1,5 +1,5 @@
 ﻿-- 전역 변수 및 상수 선언.
-local GOMMSEBAR_VERSION			= "1.01";
+local GOMMSEBAR_VERSION			= "1.10";
 local GOMMSEBAR_NAME			= "곰세바";
 local GOMMSEBAR_AUTHOR			= "곰세 (블랙무어-호드)";
 
