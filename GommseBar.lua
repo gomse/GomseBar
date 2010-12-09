@@ -4,7 +4,7 @@ local GOMMSEBAR_NAME			= "곰세바";
 local GOMMSEBAR_AUTHOR			= "곰세 (블랙무어-호드)";
 
 local GOMMSEBAR_UPDATE_RATE		= 1.0;
-local CHARACTER_MAX_LEVEL		= 80;
+local CHARACTER_MAX_LEVEL		= 85;
 
 
 function GommseBar_Print( msg )
