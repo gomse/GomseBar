@@ -1,10 +1,14 @@
 ﻿-- 전역 변수 및 상수 선언.
-local GOMMSEBAR_VERSION			= "1.2";
+local GOMMSEBAR_VERSION			= "1.5";
 local GOMMSEBAR_NAME			= "곰세바";
-local GOMMSEBAR_AUTHOR			= "곰세 (블랙무어-호드)";
+local GOMMSEBAR_AUTHOR			= "곰세 (라그나로스-호드)";
 
 local GOMMSEBAR_UPDATE_RATE		= 1.0;
 local CHARACTER_MAX_LEVEL		= 85;
+
+-- 단축키 정의.
+BINDING_HEADER_GOMMSEBAR = GOMMSEBAR_NAME;
+BINDING_NAME_GOMMSEBAR_COLLECTGARBAGE = "메모리 정리";
 
 
 function GommseBar_Print( msg )
@@ -160,6 +164,7 @@ function GommseBar_OnMouseDown( button )
 	elseif ( ( button == "RightButton" ) and ( IsShiftKeyDown() ) ) then
 		GommseBarFrame:ClearAllPoints();
 		GommseBarFrame:SetPoint( "TOP", "UIParent", "TOP", 0, 0 );
+--	elseif ( button == "LeftButton" ) then
 	elseif ( button == "RightButton" ) then
 		GommseBar_CollectGarbage();
 	end
@@ -203,7 +208,7 @@ function GommseBar_UpdateTooltip()
 
 		GommseBarFrame.tooltipTimer = GommseBarFrame.tooltipTimer + 1;
 		if ( GommseBarFrame.tooltipTimer >= 3 ) then
-			GommseBarTooltip:AddLine( "\n제작: |cFFFFFFFF"..GOMMSEBAR_AUTHOR );
+			GommseBarTooltip:AddLine( "\n\n제작: |cFFFFFFFF"..GOMMSEBAR_AUTHOR );
 			GommseBarTooltip:Show();
 		end
 	end
@@ -234,6 +239,7 @@ function GommseBarTooltip_Show()
 	GommseBarTooltip:SetText( "|cFF00FFFF"..GOMMSEBAR_NAME.." v"..GOMMSEBAR_VERSION.."\n\n" );
 
 	GommseBarTooltip_AddProperty();
+--	GommseBarTooltip_AddItemLevel();
 	GommseBarTooltip_AddXP();
 	GommseBarTooltip_AddReputation();
 	GommseBarTooltip_AddENV();
@@ -252,7 +258,7 @@ function GommseBarTooltip_AddProperty()
 	GommseBarTooltip_AddBagSpace();
 	GommseBarTooltip_AddMoney();
 	GommseBarTooltip_AddRepairStatus();
-	GommseBarTooltip:AddLine( "\n" );
+--	GommseBarTooltip:AddLine( "\n" );
 end
 
 function GommseBarTooltip_AddBagSpace()
@@ -364,7 +370,7 @@ function GommseBarTooltip_AddRepairStatus()
 		duraPer = ceil( duraVal / duraMax * 100 * 10 ) / 10;
 	end
 
-	GommseBarTooltip:AddLine( "|cFFFF0000수리비: "..repairCostText.." (내구:"..duraPer.."%)" );
+	GommseBarTooltip:AddLine( "|cFFFF0000수리비: "..repairCostText.." (내구도:"..duraPer.."%)" );
 end
 
 function GommseBarTooltip_AddXP()
@@ -386,7 +392,7 @@ function GommseBarTooltip_AddXP()
 	GommseBarTooltip:AddLine( "경험치" );
 	GommseBarTooltip:AddLine( "|cFFFFFFFF현재 경험치: "..curExp.."/"..maxExp.." ("..expPer.."%)" );
 	GommseBarTooltip:AddLine( "|cFF00FF00휴식 경험치: "..restText );
-	GommseBarTooltip:AddLine( "\n" );
+--	GommseBarTooltip:AddLine( "\n" );
 end
 
 function GommseBarTooltip_AddReputation()
@@ -408,9 +414,9 @@ function GommseBarTooltip_AddReputation()
 
 	if ( value ) then
 		local valPer = ceil( value / maxVal * 1000 ) / 10;
-		GommseBarTooltip:AddLine( "평판");
+		GommseBarTooltip:AddLine( "\n평판");
 		GommseBarTooltip:AddLine( "|cFFFFFFFF".. name ..": ".. value .. "/" .. maxVal .." (".. valPer .."%) - ".. idText[id] );
-		GommseBarTooltip:AddLine( "\n" );
+	--	GommseBarTooltip:AddLine( "\n" );
 	end
 end
 
@@ -421,8 +427,36 @@ function GommseBarTooltip_AddENV()
 	local network	= string.format( "%dms", latency );
 	local memory	= string.format( "%.2fMB", gcinfo() / 1024 );
 
-	GommseBarTooltip:AddLine( "게임 환경" );
+	GommseBarTooltip:AddLine( "\n게임 환경" );
 	GommseBarTooltip:AddLine( "|cFFFFFFFF"..fps.." / "..network.." / "..memory );
+end
+
+function GommseBar_GetItemLevel( unit )
+	local slotName = {
+		"Head","Neck","Shoulder","Back","Chest","Wrist",
+		"Hands","Waist","Legs","Feet","Finger0","Finger1",
+		"Trinket0","Trinket1","MainHand","SecondaryHand","Ranged","Ammo"
+	};
+	local total, item = 0, 0;
+
+	for i in pairs(slotName) do
+		local slot = GetInventoryItemLink(unit, GetInventorySlotInfo(slotName[i] .. "Slot"));
+		if ( slot ~= nil ) then
+			item = item + 1;
+			total = total + select(4, GetItemInfo(slot))
+		end
+	end
+
+	if ( item > 0 ) then
+		return floor( total / item );
+	end
+
+	return 0;
+end
+
+function GommseBarTooltip_AddItemLevel()
+	local level = GommseBar_GetItemLevel("player");
+	GommseBarTooltip:AddLine( "\n아이템 레벨: |cFFFFFFFF"..level.." (착용)" );
 end
 
 function GommseBar_CollectGarbage()
