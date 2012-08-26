@@ -2,7 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
 
-<Frame name="GommseBarFrame" frameStrata="BACKGROUND" enableMouse="true" topLevel="true" movable="true" resizable="true" hidden="false" parent="UIParent">
+<Frame name="GomseBarFrame" frameStrata="BACKGROUND" enableMouse="true" topLevel="true" movable="true" resizable="true" hidden="false" parent="UIParent">
 	<!-- 프레임 크기 설정 -->
 	<Size>
 		<AbsDimension x="80" y="23"/>
@@ -29,7 +29,7 @@
 	<!-- 프레임 문자열 -->
 	<Layers>
 		<Layer level="ARTWORK">
-			<FontString name="GommseBarText" inherits="GameFontNormalSmall">
+			<FontString name="GomseBarText" inherits="GameFontNormalSmall">
 				<Size>
 					<AbsDimension x="80" y="23"/>
 				</Size>
@@ -47,31 +47,31 @@
 	<!-- 스크립트 정의 -->
 	<Scripts>
 		<OnLoad>
-			GommseBar_OnLoad( self );
+			GomseBar_OnLoad( self );
 		</OnLoad>
 		<OnUpdate>
-			GommseBar_OnUpdate( elapsed );
+			GomseBar_OnUpdate( elapsed );
 		</OnUpdate>
 		<OnEvent>
-			GommseBar_OnEvent( event );
+			GomseBar_OnEvent( event );
 		</OnEvent>
 		<OnEnter>
-			GommseBar_OnEnter();
+			GomseBar_OnEnter();
 		</OnEnter>
 		<OnLeave>
-			GommseBar_OnLeave();
+			GomseBar_OnLeave();
 		</OnLeave>
 		<OnMouseDown>
-			GommseBar_OnMouseDown( button );
+			GomseBar_OnMouseDown( button );
 		</OnMouseDown>
 		<OnMouseUp>
-			GommseBar_OnMouseUp( button );
+			GomseBar_OnMouseUp( button );
 		</OnMouseUp>
 	</Scripts>
 </Frame>
 
 <!-- 배경 상태바 -->
-<StatusBar name="GommseBarStatusBar" parent="GommseBarFrame">
+<StatusBar name="GomseBarStatusBar" parent="GomseBarFrame">
 	<Size>
 		<AbsDimension x="72" y="16"/>
 	</Size>
@@ -82,26 +82,26 @@
 			</Offset>
 		</Anchor>
 	</Anchors>
-	<BarTexture name="GommseBarStatusBarTexture" file="Interface\TargetingFrame\UI-StatusBar"/>
+	<BarTexture name="GomseBarStatusBarTexture" file="Interface\TargetingFrame\UI-StatusBar"/>
 <!--	<BarColor r="1.0" g="0.0" b="1.0"/>-->
 	<Scripts>
 		<OnLoad>
-			GommseBarStatusBar_OnLoad( self );
+			GomseBarStatusBar_OnLoad( self );
 		</OnLoad>
 		<OnEvent>
-			GommseBarStatusBar_OnEvent( event );
+			GomseBarStatusBar_OnEvent( event );
 		</OnEvent>
 	</Scripts>
 </StatusBar>
 
-<GameTooltip name="GommseBarTooltip" hidden="true" parent="UIParent" inherits="GameTooltipTemplate">
+<GameTooltip name="GomseBarTooltip" hidden="true" parent="UIParent" inherits="GameTooltipTemplate">
 	<Scripts>
 	   <OnLoad>
-			GommseBarTooltip_OnLoad( self );
+			GomseBarTooltip_OnLoad( self );
 		</OnLoad>
 	</Scripts>
 </GameTooltip>
 
-<GameTooltip name="GommseBarRepairTooltip" hidden="true" parent="UIParent" inherits="GameTooltipTemplate"/>
+<GameTooltip name="GomseBarRepairTooltip" hidden="true" parent="UIParent" inherits="GameTooltipTemplate"/>
 
 </Ui>

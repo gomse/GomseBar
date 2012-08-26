@@ -1,8 +1,8 @@
 ## Interface: 40300
 ## Version: 1.5
-## Title: GommseBar v1.5
+## Title: GomseBar v1.5
 ## Notes: 화면에 각종 정보를 표시해 주는 바를 표시합니다.
 ## Author: 곰세
-## SavedVariables: GommseBar_SavedVar
-GommseBar.lua
-GommseBar.xml
+## SavedVariables: GomseBar_SavedVar
+GomseBar.lua
+GomseBar.xml

@@ -1,5 +1,5 @@
 ﻿<Bindings>
-	<Binding name="GOMMSEBAR_COLLECTGARBAGE" header="GOMMSEBAR">
-		GommseBar_CollectGarbage();
+	<Binding name="GOMSEBAR_COLLECTGARBAGE" header="GOMSEBAR">
+		GomseBar_CollectGarbage();
 	</Binding>
 </Bindings>
